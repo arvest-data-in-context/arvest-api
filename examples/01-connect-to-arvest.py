@@ -1,12 +1,15 @@
-from arvestapi import Arvest
+# Import the arvestapi package
+import arvestapi
+
+# Other imports:
 from utils import read_txt
 
-# Create an instance of the Arvest class:
-arv = Arvest(
-    "jdchart", # This is your Arvest username
-    read_txt("examples/password.txt") # This is your Arvest password
-)
+# Set you login credentials:
+EMAIL = "raymonde.fras@gmail.com"
+PASSWORD = read_txt("examples/password.txt")
 
-# Now you can use the get_user_info() method to see info like your username, number of documents, number of projects etc.
-info = arv.get_my_info()
-print(info)
+# Create an instance of the Arvest class and provide your login credentials:
+ar = arvestapi.Arvest(EMAIL, PASSWORD)
+
+# Now you can get basic info like your user profile info:
+print(ar.profile.name)
