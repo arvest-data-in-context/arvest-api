@@ -66,11 +66,16 @@ class Arvest:
             print("Unable to get personal user group because the user profile was not found.")
             return None
         
-    def get_projects(self) -> list[Project]:
-        """Return a list of the user's projects."""
+    def get_projects(self, **kwargs) -> list[Project]:
+        """
+        Return a list of the user's projects.
+        
+        ## kwargs
+        - group_id (int) : the id of the group's projects (by default, the user's personal group)
+        """
 
         if self._personal_group != None:
-            url = f"{self._arvest_prefix}/link-group-project/{str(self._personal_group.id)}"
+            url = f"{self._arvest_prefix}/link-group-project/{str(kwargs.get("group_id", self._personal_group.id))}"
             response = requests.get(url, headers = self._auth_header)
             if response.status_code == 200:
                 ret = []
@@ -89,9 +94,10 @@ class Arvest:
         Create a new arvest project.
         
         ## kwargs
-        - title (str)
-        - user_workspace (dict)
-        - metadata (dict)
+        - title (str) : project title
+        - user_workspace (dict) : mirador workspace
+        - metadata (dict) : ad hoc metadata
+        - owner_id (int) : the group owner of the project (by default, the user's personal group)
         """
 
         if self._personal_group != None:
@@ -100,7 +106,7 @@ class Arvest:
             body = {
                 "title" : kwargs.get("title", ""),
                 "userWorkspace" : kwargs.get("user_workspace", None),
-                "ownerId" : self.profile.id,
+                "ownerId" : kwargs.get("owner_id", self.profile.id),
                 "metadata" : kwargs.get("metadata", {})
             }
             response = requests.post(url, json = body, headers = self._auth_header)
