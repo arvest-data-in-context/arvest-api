@@ -2,6 +2,8 @@ import requests
 from .profile import Profile
 from .group import Group
 from .project import Project
+from .media import Media
+from .manifest import Manifest
 
 class Arvest:
     def __init__(self, email : str, password : str, **kwargs) -> None:
@@ -75,7 +77,7 @@ class Arvest:
         """
 
         if self._personal_group != None:
-            url = f"{self._arvest_prefix}/link-group-project/{str(kwargs.get("group_id", self._personal_group.id))}"
+            url = f"{self._arvest_prefix}/link-group-project/{str(kwargs.get('group_id', self._personal_group.id))}"
             response = requests.get(url, headers = self._auth_header)
             if response.status_code == 200:
                 ret = []
@@ -87,6 +89,53 @@ class Arvest:
                 return None
         else:
             print("Unable to get projects because unable to find personal user group.")
+            return None
+        
+    def get_media(self, **kwargs) -> list[Project]:
+        """
+        Return a list of the user's media.
+        
+        ## kwargs
+        - group_id (int) : the id of the group's projects (by default, the user's personal group)
+        """
+
+        if self._personal_group != None:
+            url = f"{self._arvest_prefix}/link-media-group/group/{str(kwargs.get('group_id', self._personal_group.id))}"
+            response = requests.get(url, headers = self._auth_header)
+            if response.status_code == 200:
+                ret = []
+                for item in response.json():
+                    ret.append(Media(response_body = item))
+                return ret
+            else:
+                print("Unable to get media.")
+                return None
+        else:
+            print("Unable to get media because unable to find personal user group.")
+            return None
+        
+    def get_manifests(self, **kwargs) -> list[Manifest]:
+        """
+        Return a list of the user's manifests.
+        
+        ## kwargs
+        - group_id (int) : the id of the group's projects (by default, the user's personal group)
+        """
+
+        if self._personal_group != None:
+            url = f"{self._arvest_prefix}/link-manifest-group/group/{str(kwargs.get('group_id', self._personal_group.id))}"
+            response = requests.get(url, headers = self._auth_header)
+
+            if response.status_code == 200:
+                ret = []
+                for item in response.json():
+                    ret.append(Manifest(response_body = item))
+                return ret
+            else:
+                print("Unable to get manifests.")
+                return None
+        else:
+            print("Unable to get manifests because unable to find personal user group.")
             return None
         
     def create_project(self, **kwargs) -> Project:
@@ -115,4 +164,24 @@ class Arvest:
                 return Project(response_body = response.json())
             else:
                 print("Unable to create project.")
+                return None
+            
+    def add_media(self, **kwargs) -> Project:
+        """
+        Upload a new media.
+        
+        ## kwargs
+        
+        """
+
+        if self._personal_group != None:
+            url = f"{self._arvest_prefix}/link-media-group/media/link"
+            
+            body = {}
+            response = requests.post(url, json = body, headers = self._auth_header)
+            
+            if response.status_code == 201:
+                return Media(response_body = response.json())
+            else:
+                print("Unable to add media.")
                 return None

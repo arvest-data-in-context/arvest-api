@@ -11,7 +11,8 @@ my_projects = ar.get_projects()
 
 for project in my_projects:
     print(project.title)
+    print(project.user_workspace)
 
 # Create a new project using the create_project() method:
-new_project = ar.create_project(title = "My cool new project 2")
+new_project = ar.create_project(title = "My cool new project")
 print(new_project.title)
