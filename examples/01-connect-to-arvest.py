@@ -5,8 +5,8 @@ import arvestapi
 from utils import read_txt
 
 # Set you login credentials:
-EMAIL = "raymonde.fras@gmail.com"
-PASSWORD = read_txt("examples/password.txt")
+EMAIL = "jacob.hart@univ-rennes2.fr"
+PASSWORD = read_txt("examples/login/password-jh-fac.txt")
 
 # Create an instance of the Arvest class and provide your login credentials:
 ar = arvestapi.Arvest(EMAIL, PASSWORD)

@@ -5,3 +5,7 @@ For more information about arvest, check out the website at [www.arvest.app](www
 """
 
 from .arvest import Arvest
+from .media import Media
+from .manifest import Manifest
+from .project import Project
+from .user_workspace import UserWorkspace
