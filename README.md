@@ -1,6 +1,6 @@
 # arvest-api
 
-A python package for interacting with the Arvest API. Visit [www.arvest.app](www.arvest.app) for more info.
+A python package for interacting with the Arvest API. Visit [arvest.app](https://arvest.app/en) for more info.
 
 ## Usage
 

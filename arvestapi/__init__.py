@@ -9,3 +9,4 @@ from .media import Media
 from .manifest import Manifest
 from .project import Project
 from .user_workspace import UserWorkspace
+from .utils import manifest_parser

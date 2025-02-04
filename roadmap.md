@@ -5,7 +5,7 @@
 - [x] Get user profile
     - [x] Get user projects
     - [x] Get user media
-        - [x] Get media resource
+        - [ ] Get media resource
     - [x] Get user manifests
     - [ ] Get user groups
 - [x] Create project

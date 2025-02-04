@@ -23,3 +23,41 @@ def pretty_print_dict(d, level):
 def write_json(data, path):
     with open(path, 'w') as f:
         json.dump(data, f, indent=2)
+
+def manifest_parser(manifest_data, type_chain = [], **kwargs):
+    """
+    A utility function for iteratively processing Manifest dict data.
+    
+    kwargs:
+    - id_func: give a function that will treat an item if the item has and id field
+    the function must have the following format: function(item, type_chain, args)
+    - target_func: give a function that will treat an item if the item has a target field
+    the function must have the following format: function(item, type_chain, args)
+    """
+
+    if "type" in manifest_data:
+        type_chain.append(manifest_data["type"])
+    else:
+        type_chain.append("&&NO_TYPE")
+
+    if kwargs.get("id_func", None) != None:
+        if "id" in manifest_data:
+            kwargs.get("id_func")(manifest_data, type_chain, kwargs.get("id_func_args", None))
+
+    if kwargs.get("target_func", None) != None:
+        if "target" in manifest_data:
+            kwargs.get("target_func")(manifest_data, type_chain, kwargs.get("target_func_args", None))
+
+    # Recursively treat other items:
+    if "items" in manifest_data:
+        for item in manifest_data["items"]:
+            manifest_parser(item, type_chain, **kwargs)
+    
+    if "annotations" in manifest_data:
+        for item in manifest_data["annotations"]:
+            manifest_parser(item, type_chain, **kwargs)
+    
+    if "body" in manifest_data:
+        manifest_parser(manifest_data["body"], type_chain, **kwargs)
+
+    type_chain = type_chain.pop()
