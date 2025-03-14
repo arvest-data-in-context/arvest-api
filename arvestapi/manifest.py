@@ -208,22 +208,33 @@ class Manifest:
                 self._update_id_lower(item, new_id_prefix)
         
         if "annotations" in content:
-            for item in content["annotations"]:
-                
-                if "id" in item:
-                    if "/canvas/" in item["id"]:
-                        previous_id = item["id"]
-                        id_suffix = "/canvas/" + previous_id.split("/canvas/")[1]
-                        new_id = new_id_prefix + id_suffix
+            if content["annotations"] != None:
+                for item in content["annotations"]:
+                    
+                    if "id" in item:
+                        if "/canvas/" in item["id"]:
+                            previous_id = item["id"]
+                            id_suffix = "/canvas/" + previous_id.split("/canvas/")[1]
+                            new_id = new_id_prefix + id_suffix
 
-                        item["id"] = new_id
+                            item["id"] = new_id
 
-                if "target" in item:
-                    if "/canvas/" in item["target"]:
-                        previous_id = item["target"]
-                        id_suffix = "/canvas/" + previous_id.split("/canvas/")[1]
-                        new_id = new_id_prefix + id_suffix
+                    if "target" in item:
+                        if "/canvas/" in item["target"]:
+                            previous_id = item["target"]
+                            id_suffix = "/canvas/" + previous_id.split("/canvas/")[1]
+                            new_id = new_id_prefix + id_suffix
 
-                        item["target"] = new_id
+                            item["target"] = new_id
 
-                self._update_id_lower(item, new_id_prefix)
+                    self._update_id_lower(item, new_id_prefix)
+
+    def remove(self):
+        url = f"{self._arvest_instance._arvest_prefix}/link-manifest-group/manifest/{self.id}"  
+        response = requests.delete(url, headers = self._arvest_instance._auth_header)
+
+        if response.status_code == 200:
+            pass
+        else:
+            print("Unable to delete manifest.")
+            return None

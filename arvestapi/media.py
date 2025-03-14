@@ -125,3 +125,13 @@ class Media:
         else:
             print("Unable to update metadata.")
             return None
+    
+    def remove(self):
+        url = f"{self._arvest_instance._arvest_prefix}/link-media-group/media/{self.id}"  
+        response = requests.delete(url, headers = self._arvest_instance._auth_header)
+
+        if response.status_code == 200:
+            pass
+        else:
+            print("Unable to delete manifest.")
+            return None

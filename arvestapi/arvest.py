@@ -97,7 +97,7 @@ class Arvest:
             print("Unable to get projects because unable to find personal user group.")
             return None
         
-    def get_medias(self, **kwargs) -> list[Project]:
+    def get_medias(self, **kwargs) -> list[Media]:
         """
         Return a list of the user's media.
         

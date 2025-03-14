@@ -1,5 +1,6 @@
 from .utils import debug_print_response_body
 from .user_workspace import UserWorkspace
+import requests
 
 class Project:
     def __init__(self, **kwargs) -> None:
@@ -37,3 +38,13 @@ class Project:
         self.snapshot_hash = response_body["project"]["snapShotHash"]
         self.locked_by_user_id = response_body["project"]["lockedByUserId"]
         self.locked_at = response_body["project"]["lockedAt"]
+
+    def remove(self):
+        url = f"{self._arvest_instance._arvest_prefix}/link-group-project/delete/project/{self.id}"  
+        response = requests.delete(url, headers = self._arvest_instance._auth_header)
+
+        if response.status_code == 200:
+            pass
+        else:
+            print("Unable to delete manifest.")
+            return None

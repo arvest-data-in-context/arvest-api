@@ -54,10 +54,12 @@ def manifest_parser(manifest_data, type_chain = [], **kwargs):
             manifest_parser(item, type_chain, **kwargs)
     
     if "annotations" in manifest_data:
-        for item in manifest_data["annotations"]:
-            manifest_parser(item, type_chain, **kwargs)
+        if manifest_data["annotations"] != None:
+            for item in manifest_data["annotations"]:
+                manifest_parser(item, type_chain, **kwargs)
     
     if "body" in manifest_data:
-        manifest_parser(manifest_data["body"], type_chain, **kwargs)
+        if manifest_data["body"] != None:
+            manifest_parser(manifest_data["body"], type_chain, **kwargs)
 
     type_chain = type_chain.pop()
