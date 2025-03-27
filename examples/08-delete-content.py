@@ -1,6 +1,5 @@
 import arvestapi
 from utils import read_login
-import os
 
 EMAIL, PASSWORD = read_login("examples/login/jh-fac.txt")
 ar = arvestapi.Arvest(EMAIL, PASSWORD)

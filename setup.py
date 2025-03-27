@@ -6,7 +6,9 @@ long_description= """
 A python package for interacting with the Arvest API
 """
 
-required = []
+required = [
+    "requests"
+]
 
 setup(
     name="arvestapi",
