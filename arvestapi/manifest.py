@@ -143,7 +143,10 @@ class Manifest:
         response = requests.get(url, headers = self._arvest_instance._auth_header)
 
         if response.status_code == 200:
-            return response.json()
+            if len(response.json()) > 0:
+                return response.json()[0]["metadata"]
+            else:
+                return self._arvest_instance.get_metadata_formats()[0].to_setter_dict()["metadata"]
             
             #return Profile(response_body = response.json(), debug = self.debug)
         else:

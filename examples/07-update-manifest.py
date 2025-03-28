@@ -17,11 +17,6 @@ new_local_manifest.update_description("New description from script")
 # Get metadata:
 existing_metadata = new_local_manifest.get_metadata()
 
-if len(existing_metadata) > 0:
-    existing_metadata = existing_metadata[0]["metadata"]
-else:
-    existing_metadata = {}
-
 # Update metadata:
 existing_metadata["abstract"] = "ADDED FROM SCRIPT"
 new_local_manifest.update_metadata(existing_metadata)

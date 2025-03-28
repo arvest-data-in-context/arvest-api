@@ -11,12 +11,6 @@ for i, media in enumerate(medias):
     media.update_description(f"Media item {i}")
     
     existing_metadata = media.get_metadata()
-    
-    if len(existing_metadata) > 0:
-        existing_metadata = existing_metadata[0]["metadata"]
-    else:
-        existing_metadata = {}
-
     existing_metadata["accessRights"] = f"Access rights {i}"
 
     media.update_metadata(existing_metadata)
