@@ -106,8 +106,9 @@ class Arvest:
         """
 
         if self._personal_group != None:
-            url = f"{self._arvest_prefix}/link-media-group/group/{str(kwargs.get('group_id', self._personal_group.id))}"
+            url = f"{self._arvest_prefix}/link-media-group/medias"#/{str(kwargs.get('group_id', self._personal_group.id))}"
             response = requests.get(url, headers = self._auth_header)
+        
             if response.status_code == 200:
                 ret = []
                 for item in response.json():
@@ -129,7 +130,7 @@ class Arvest:
         """
 
         if self._personal_group != None:
-            url = f"{self._arvest_prefix}/link-manifest-group/group/{str(kwargs.get('group_id', self._personal_group.id))}"
+            url = f"{self._arvest_prefix}/link-manifest-group/manifests"#group/{str(kwargs.get('group_id', self._personal_group.id))}"
             response = requests.get(url, headers = self._auth_header)
 
             if response.status_code == 200:
