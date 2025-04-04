@@ -21,6 +21,7 @@ class Manifest:
         self.updated_at = kwargs.get("origin", None)
         self._arvest_resource_prefix = kwargs.get("arvest_resource_prefix", "https://resource.arvest.app")
         self._arvest_instance = kwargs.get("arvest_instance", None)
+        self._arvest_workspace_prefix = kwargs.get("arvest_workspace_prefix", "https://workspace.arvest.app")
 
         if "response_body" in kwargs:
             self._parse_response_body(kwargs.get("response_body"))
@@ -140,6 +141,13 @@ class Manifest:
         """Update the thumbnail url of the Manifest object."""
         self.thumbnail_url = new_thumbnail
         self._update_distant_from_self()
+
+    def get_preview_url(self) -> str:
+        """Return a url that allows you to consult the Manifest directly in a Mirador winbdow."""
+        if self.origin == "upload" or self.origin == "create":
+            return f"{self._arvest_workspace_prefix}/manifest/{self.hash}/{self.path}"
+        elif self.origin == "link":
+            return f"{self._arvest_workspace_prefix}/manifest/{self.url}"
 
     def get_metadata(self):
         """Return the manifest's metadata."""
