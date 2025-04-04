@@ -136,6 +136,11 @@ class Manifest:
         self.description = new_description
         self._update_distant_from_self()
 
+    def update_thumbnail_url(self, new_thumbnail : str) -> None:
+        """Update the thumbnail url of the Manifest object."""
+        self.thumbnail_url = new_thumbnail
+        self._update_distant_from_self()
+
     def get_metadata(self):
         """Return the manifest's metadata."""
 
